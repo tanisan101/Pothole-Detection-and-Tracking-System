@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pothole Detection System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY" defer></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">Pothole Detect</div>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#upload">Upload</a></li>
+        <li><a href="#map">Map</a></li>
+        <li><a href="#insights">Insights</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-content">
+      <h1>Smart Pothole Detection System</h1>
+      <p>Detect. Visualize. Report. For Safer Roads.</p>
+      <button onclick="scrollToSection('#upload')">Get Started</button>
+    </div>
+  </header>
+
+  <!-- About Us Section -->
+  <section id="about" class="section about-section">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>About Us</h2>
+        <p>
+          At <strong>Pothole Detect</strong>, we aim to revolutionize road safety with cutting-edge technology and data
+          science.
+          Our platform provides a smart, user-friendly solution to identify potholes and highlight hazardous road
+          conditions.
+          By empowering individuals and authorities with actionable insights, we strive to create safer and smoother
+          roads
+          for everyone. Our mission is to make road safety a shared responsibility and ensure no journey is hindered by
+          poor infrastructure.
+        </p>
+        <p>
+          Together, we can build a future where technology plays a pivotal role in improving infrastructure and reducing
+          accidents.
+          Join us in this journey towards safer roads!
+        </p>
+      </div>
+      <div class="about-image">
+        <img src="{{ url_for('static', filename='images/about.jpg') }}" alt="Road-safety">
+      </div>
+    </div>
+  </section>
+
+  <!-- Upload Section -->
+  <section id="upload" class="section">
+    <h2>Upload Your Road Media</h2>
+    <p>Upload videos to detect potholes and identify road safety risks.</p>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <div class="upload-box">
+        <input type="file" id="file-upload" name = "video" accept="video/*" required>
+        <button type="submit">Upload Now</button>
+        <p id="upload-status"></p>
+      </div>
+    </form>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map" class="section map-section">
+    <h2>Pothole Map Visualization</h2>
+    <p>Discover pothole hotspots and road conditions in your area.</p>
+    <div id="map"></div>
+  </section>
+
+  <!-- Insights Section -->
+  <section id="insights" class="section">
+    <h2>Pothole Insights</h2>
+    <div class="insights">
+      <div class="insight-box">
+        <i class="fas fa-road"></i>
+        <h3>Total Potholes</h3>
+        <p id="total-potholes">{{ no_of_potholes }}</p>
+      </div>
+      <div class="insight-box">
+        <i class="fas fa-exclamation-circle"></i>
+        <h3>Severity Level</h3>
+        <p id="severity">N/A</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <footer id="contact">
+    <p>Have Questions? Contact us at <a href="mailto:info@pothole-detect.com">info@pothole-detect.com</a></p>
+    <p>&copy; 2024 Pothole Detection System</p>
+  </footer>
+
+  <script src="static\js\script.js"></script>
+  <script type="application/json" id="pothole-data">
+    {{ potholes | tojson | safe }}
+  </script>
+  
+  <script>
+    // Read JSON data from the script tag
+    const potholeData = JSON.parse(document.getElementById("pothole-data").textContent);
+  
+    function initMap() {
+      const defaultCenter = { lat: 28.7041, lng: 77.1025 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        center: defaultCenter,
+      });
+  
+      // Place markers
+      potholeData.forEach((pothole) => {
+        if (pothole.Latitude && pothole.Longitude) {
+          new google.maps.Marker({
+            position: { lat: parseFloat(pothole.Latitude), lng: parseFloat(pothole.Longitude) },
+            map: map,
+          });
+        }
+      });
+    }
+  
+    window.onload = initMap;
+  </script>
+</body>
+
+</html>

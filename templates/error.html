@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            text-align: center;
+            background-color: #ffffff;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .error-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .error-icon {
+            font-size: 50px;
+            color: #f5c6cb;
+            margin-bottom: 15px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #721c24;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #721c24;
+            color: #ffffff;
+            border: 2px solid #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">Oops! Something went wrong</div>
+        <div class="error-message">
+            {{ msg }}
+        </div>
+        <a href="/" class="back-button">Go Back to Home</a>
+    </div>
+</body>
+</html>
