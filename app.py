@@ -173,10 +173,10 @@ def home():
                 return render_template("index.html", potholes = potholes, no_of_potholes = no_of_potholes)
 
             except Exception as e:
-                 collection = None
-                 print("Database not connected:", e)
+                collection = None
+                print("Database not connected:", e)
                 #return render_template("error.html", msg = "Mongodb error")
-            return render_template("error.html", msg="Unexpected server error")
+            #return render_template("error.html", msg="Unexpected server error")
 # Main app run
 if __name__ == "__main__":
     app.run(debug=True)
