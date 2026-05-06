@@ -124,15 +124,21 @@ def home():
 
     if request.method == "GET":
 
-        potholes = list(collection.find({}, {"_id": 0, "Latitude": 1, "Longitude": 1}))
-        no_of_potholes = collection.count_documents({})
+        try:
+            potholes = list(collection.find({}, {"_id": 0, "Latitude": 1, "Longitude": 1}))
+            no_of_potholes = collection.count_documents({})
 
-        return render_template(
-            "index.html",
-            potholes=potholes,
-            no_of_potholes=no_of_potholes
-        )
+            return render_template(
+                "index.html",
+                potholes=potholes,
+                no_of_potholes=no_of_potholes
+            )
 
+        except Exception as e:
+            return render_template(
+                "error.html",
+                msg=f"Homepage database error: {e}"
+            )
     if request.method == "POST":
 
         if 'video' not in request.files:
