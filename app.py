@@ -10,7 +10,7 @@ import math
 app = Flask(__name__)
 
 # Creating database
-default_connection_url = os.environ.get("MONGO_URI")
+default_connection_url = os.environ.get("Mango_url")
 db_name = "Pothole-Detection"
 
 try:
