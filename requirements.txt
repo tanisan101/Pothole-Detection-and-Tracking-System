@@ -1,6 +1,6 @@
 ﻿blinker==1.9.0
 certifi==2024.12.14
-torch==2.5.1
+torch==2.3.1
 torchvision==0.20.1
 charset-normalizer==3.4.0
 click==8.1.7
