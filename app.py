@@ -10,7 +10,7 @@ import math
 app = Flask(__name__)
 
 # Creating database
-default_connection_url = "mongodb://localhost:27017/"
+default_connection_url = os.environ.get("MONGO_URI")
 db_name = "Pothole-Detection"
 
 try:
@@ -22,7 +22,7 @@ try:
     collection = dataBase[collection_name]
 
 except Exception as e:
-    render_template("error.html", msg = "Database not connected")
+    return render_template("error.html", msg = "Database not connected")
 
 # Creating upload folder
 UPLOAD_FOLDER = 'Uploads'
@@ -150,7 +150,7 @@ def home():
             output_video = os.path.join(VIDEO_DIR, f"processed_{file.filename}")
 
             # Process the video
-            model_path = r"Model\best.pt"  # Adjust the model path as needed
+            model_path = "Model/best.pt"  # Adjust the model path as needed
             try:
                 process_video(filepath, output_video, model_path)
             except Exception as e:
@@ -173,8 +173,10 @@ def home():
                 return render_template("index.html", potholes = potholes, no_of_potholes = no_of_potholes)
 
             except Exception as e:
-                return render_template("error.html", msg = "Mongodb error")
-
+                 collection = None
+                 print("Database not connected:", e)
+                #return render_template("error.html", msg = "Mongodb error")
+            return render_template("error.html", msg="Unexpected server error")
 # Main app run
 if __name__ == "__main__":
     app.run(debug=True)
